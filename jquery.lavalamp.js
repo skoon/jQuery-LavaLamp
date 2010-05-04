@@ -227,6 +227,12 @@
  * causes the backLava element to resize and reposition to the p.selectedLava position 
  * and dimensions when the window resizes.
  *
+ * @param returnCallback - default: returns true
+ * A function to call once the highlight has returned to the selected element.
+ *
+ * Example:
+ * jQuery('div#articles').lavaLamp({returnCallback: function() { alert('returned') }});
+ * Will alert "returned" when the highlight returns.
  */
 
 //console.log();
@@ -246,7 +252,8 @@ jQuery.fn.lavaLamp = function(o) {
 				homeWidth:0,
 				homeHeight:0,
 				returnHome:false,
-				autoResize:false
+				autoResize:false,
+                returnCallback: function() { return true}
 				}, 
 			o || {});
 
@@ -367,7 +374,7 @@ jQuery.fn.lavaLamp = function(o) {
 
 		function move($el) {
 			if (!$el) $el = $selected;
-
+            o.returnCallback();
 			$back.stop()
 			.animate({
 				left: $el.position().left,
